@@ -163,6 +163,9 @@ public class MainGame extends ApplicationAdapter {
                 batch.draw(g.getGarbageImage(), 550-offset, 450);
                 offset+=113;
             }
+            for(int i=0; i<lives; ++i){
+                batch.draw(heartImage, 750-50*i, 530, 50, 50);
+            }
             startButton.setVisible(false);
             glassGarbageButton.setVisible(true);
             plasticGarbageButton.setVisible(true);
@@ -177,9 +180,6 @@ public class MainGame extends ApplicationAdapter {
             plasticGarbageButton.setVisible(false);
             paperGarbageButton.setVisible(false);
             endButton.setVisible(true);
-        }
-        for(int i=0; i<lives; ++i){
-            batch.draw(heartImage, 750-50*i, 530, 50, 50);
         }
         if(lives<1){
             endMenu=true;
