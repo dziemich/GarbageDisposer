@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.util.Random;
@@ -33,14 +34,19 @@ public class MainGame extends ApplicationAdapter {
 	private Random rnd;
 	boolean startMenu = true;
 	boolean endMenu = false;
+    private boolean timerIsOn=false;
 	private Stage stage;
 	private ImageButton startButton, endButton, glassGarbageButton, plasticGarbageButton, paperGarbageButton;
     private ScoreKeeper scoreKeeper;
     private BitmapFont scoreDisplay;
     Sound bgSound, paperSound, plasticSound, glassSound;
     private int lives= 3;
+    private Long lifeTime;
+    private float timer=0;
+    private float delay = 4;
 
-	@Override
+
+    @Override
 	public void create () {
 		batch = new SpriteBatch();
 		gameBackgroundImage = new Texture("core/assets/bg.jpg");
@@ -51,6 +57,7 @@ public class MainGame extends ApplicationAdapter {
         paperSound = Gdx.audio.newSound(Gdx.files.internal("core/assets/ogg/82378_gynation_paper-flip-2.ogg"));
         plasticSound = Gdx.audio.newSound(Gdx.files.internal("core/assets/ogg/405702_apinasaundi_found-plastic-bottle-1.ogg"));
         glassSound = Gdx.audio.newSound(Gdx.files.internal("core/assets/ogg/338692_natemarler_glass-break-small.ogg"));
+        lifeTime = System.currentTimeMillis();
         stage = new Stage(new ScreenViewport());
         belt = new Belt();
         rnd = new Random();
@@ -172,6 +179,13 @@ public class MainGame extends ApplicationAdapter {
             paperGarbageButton.setVisible(true);
             endButton.setVisible(false);
             scoreDisplay.draw(batch, "Score: " + scoreKeeper.getScore(), 710, 600);
+
+            timer+=Gdx.graphics.getRawDeltaTime();
+            if(timer>delay){
+                belt.returnPopped();
+                lives--;
+                timer=0;
+            }
 		}
         else if(endMenu){
             batch.draw(startBackgroundImage, 0, 0);
