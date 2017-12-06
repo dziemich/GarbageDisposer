@@ -36,44 +36,20 @@ public class Belt {
     }
 
     public void addToBelt(Random generator){
-        if(garbageList.size() == 5) {
+        if(garbageList.size() <5) {
+            //garbageList.add(new GlassGarbage());
             int switcher = generator.nextInt(3);
             switch (switcher) {
                 case 0:
-                    garbageList.add(5, new GlassGarbage());
+                    garbageList.add(new GlassGarbage());
                     break;
                 case 1:
-                    garbageList.add(5, new PaperGarbage());
+                    garbageList.add(new PaperGarbage());
                     break;
                 case 2:
-                    garbageList.add(5, new PlasticGarbage());
-            }
-        }else if(garbageList.size() == 6) {
-            int switcher = generator.nextInt(3);
-            switch (switcher) {
-                case 0:
-                    garbageList.add(6, new GlassGarbage());
-                    break;
-                case 1:
-                    garbageList.add(6, new PaperGarbage());
-                    break;
-                case 2:
-                    garbageList.add(6, new PlasticGarbage());
-            }
-        }else if(garbageList.size() > 6) {
-            int switcher = generator.nextInt(3);
-            switch (switcher) {
-                case 0:
-                    garbageList.add(7, new GlassGarbage());
-                    break;
-                case 1:
-                    garbageList.add(7, new PaperGarbage());
-                    break;
-                case 2:
-                    garbageList.add(7, new PlasticGarbage());
+                    garbageList.add(new PlasticGarbage());
             }
         }
-
     }
     public void firstTimeBelt(Random generator){
         for(int i=0; i<5; ++i){

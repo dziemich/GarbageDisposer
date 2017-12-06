@@ -36,6 +36,8 @@ public class MainGame extends ApplicationAdapter {
     boolean startMenu = true;
     boolean endMenu = false;
     private boolean timerIsOn=false;
+    private  boolean firstIterationFlag=true;
+    private boolean secondIterationFlag=true;
     private Stage stage;
     private ImageButton startButton, endButton, glassGarbageNONEButton, glassGarbagePOSButton, glassGarbageSOUNDButton, plasticGarbageNONEButton,
             plasticGarbagePOSButton, plasticGarbageSOUNDButton, paperGarbageNONEButton, paperGarbagePOSButton, paperGarbageSOUNDButton;
@@ -46,10 +48,12 @@ public class MainGame extends ApplicationAdapter {
     private int lives= 3;
     private Long lifeTime;
     private float timer=0;
-    private float delay = 4;
+    private float delay = 5;
     private int displayCounter =0;
     private int moveToNextGarbage=0;
-
+    Garbage.garbageTypes typeStorage;
+    Garbage.garbageTypes typeStorage2;
+    //Garbage.soundTypes soundStorage;
 
     @Override
     public void create () {
@@ -76,6 +80,8 @@ public class MainGame extends ApplicationAdapter {
         scoreDisplay.setColor(Color.WHITE);
         scoreDisplay.getData().setScale(1.2f);
         Gdx.input.setInputProcessor(stage);
+        typeStorage = Garbage.garbageTypes.GLASS;
+        typeStorage2 =Garbage.garbageTypes.GLASS;
         //SOUND
 
         bgSound.loop(1.0f);
@@ -140,45 +146,98 @@ public class MainGame extends ApplicationAdapter {
             }
         });
 
-        startButton.addListener(new ClickListener() {
+        glassGarbageNONEButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y){
-                startMenu = false;
-            }
-        });
-        startButton.addListener(new ClickListener() {
-            public void clicked(InputEvent event, float x, float y){
-                startMenu = false;
-            }
-        });
-        glassGarbageButton.addListener(new ClickListener() {
-            public void clicked(InputEvent event, float x, float y){
-                Garbage check = belt.returnPopped();
-                if(check.returnType().equals(Garbage.garbageTypes.GLASS)){
+                Garbage checker = belt.returnPopped();
+                if(checker.returnType().equals(Garbage.garbageTypes.GLASS) && !checker.returnType().equals(typeStorage2)){
                     scoreKeeper.add(100);
                     final long playGlassSound = glassSound.play(1.0f);
+
                 }
                 else{
                     lives--;
                 }
+                timer=0;
+                System.out.println(typeStorage.toString() + "  " + typeStorage2.toString());
             }
         });
-        paperGarbageButton.addListener(new ClickListener() {
-            public void clicked(InputEvent event, float x, float y){
-                if(belt.size()<7){
-                    Garbage.garbageTypes type = belt.checkType(belt.size()-5);
-                    if (type.equals(Garbage.garbageTypes.PAPER)) {
-                        scoreKeeper.add(100);
-                        final long playPaperSound = paperSound.play(1.0f);
-                    } else {
-                        lives--;
-                    }
+        glassGarbagePOSButton.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                Garbage checker = belt.returnPopped();
+                if (checker.returnType().equals(Garbage.garbageTypes.GLASS) && checker.returnType().equals(typeStorage2)) {
+                    scoreKeeper.add(100);
+                    final long playGlassSound = glassSound.play(1.0f);
+                    typeStorage2 = typeStorage;
+                    typeStorage = checker.returnType();
+                    System.out.println(checker.returnType());
                 } else {
-
+                    lives--;
+                }
+                timer=0;
+                System.out.println(typeStorage.toString() + "  " + typeStorage2.toString()+ "  " + checker.returnType().toString());
+            }
+        });
+        plasticGarbageNONEButton.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y){
+                Garbage checker = belt.returnPopped();
+                if(checker.returnType().equals(Garbage.garbageTypes.PLASTIC) && !checker.returnType().equals(typeStorage2)){
+                    scoreKeeper.add(100);
+                    final long playGlassSound = glassSound.play(1.0f);
 
                 }
+                else{
+                    lives--;
+                }
+                timer=0;
+                System.out.println(typeStorage.toString() + "  " + typeStorage2.toString());
             }
         });
-        plasticGarbageButton.addListener(new ClickListener() {
+        plasticGarbagePOSButton.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                Garbage checker = belt.returnPopped();
+                if (checker.returnType().equals(Garbage.garbageTypes.PLASTIC) && checker.returnType().equals(typeStorage2)) {
+                    scoreKeeper.add(100);
+                    final long playGlassSound = glassSound.play(1.0f);
+                    typeStorage2 = typeStorage;
+                    typeStorage = checker.returnType();
+                } else {
+                    lives--;
+                }
+                timer=0;
+                System.out.println(typeStorage.toString() + "  " + typeStorage2.toString());
+            }
+        });
+        paperGarbageNONEButton.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y){
+                Garbage checker = belt.returnPopped();
+                if(checker.returnType().equals(Garbage.garbageTypes.PAPER) && !checker.returnType().equals(typeStorage2)){
+                    scoreKeeper.add(100);
+                    final long playGlassSound = glassSound.play(1.0f);
+
+                }
+                else{
+                    lives--;
+                }
+                timer=0;
+                System.out.println(typeStorage.toString() + "  " + typeStorage2.toString());
+            }
+        });
+        paperGarbagePOSButton.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                Garbage checker = belt.returnPopped();
+                if (checker.returnType().equals(Garbage.garbageTypes.PAPER) && checker.returnType().equals(typeStorage2)) {
+                    scoreKeeper.add(100);
+                    final long playGlassSound = glassSound.play(1.0f);
+                    typeStorage2 = typeStorage;
+                    typeStorage = checker.returnType();
+                } else {
+                    lives--;
+                }
+                timer=0;
+                System.out.println(typeStorage.toString() + "  " + typeStorage2.toString());
+            }
+        });
+        /*plasticGarbageButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y){
                 Garbage check = belt.returnPopped();
                 if(check.returnType().equals(Garbage.garbageTypes.PLASTIC)){
@@ -189,7 +248,7 @@ public class MainGame extends ApplicationAdapter {
                     lives--;
                 }
             }
-        });
+        });*/
 	}
 	@Override
 	public void render () {
@@ -218,18 +277,15 @@ public class MainGame extends ApplicationAdapter {
                 a.setVisible(true);
             }
             startButton.setVisible(false);
-            glassGarbageButton.setVisible(true);
-            plasticGarbageButton.setVisible(true);
-            paperGarbageButton.setVisible(true);
             endButton.setVisible(false);
             scoreDisplay.draw(batch, "Score: " + scoreKeeper.getScore(), 710, 600);
 
-            timer+=Gdx.graphics.getRawDeltaTime();
+            /*timer+=Gdx.graphics.getRawDeltaTime();
             if(timer>delay){
                 belt.returnPopped();
                 lives--;
                 timer=0;
-            }
+            }*/
 		}
         else if(endMenu){
             batch.draw(startBackgroundImage, 0, 0);
@@ -238,10 +294,10 @@ public class MainGame extends ApplicationAdapter {
             }
             endButton.setVisible(true);
         }
-        if(lives<1){
+        /*if(lives<1){
             endMenu=true;
             scoreKeeper.resetScore();
-        }
+        }*/
         belt.addToBelt(rnd);
         batch.end();
         stage.getBatch();
