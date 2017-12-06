@@ -152,29 +152,31 @@ public class MainGame extends ApplicationAdapter {
                 if(checker.returnType().equals(Garbage.garbageTypes.GLASS) && !checker.returnType().equals(typeStorage2)){
                     scoreKeeper.add(100);
                     final long playGlassSound = glassSound.play(1.0f);
+                    typeStorage2 = typeStorage;
+                    typeStorage = checker.returnType();
 
                 }
                 else{
                     lives--;
                 }
                 timer=0;
-                System.out.println(typeStorage.toString() + "  " + typeStorage2.toString());
+                //System.out.println(typeStorage.toString() + "  " + typeStorage2.toString());
             }
         });
         glassGarbagePOSButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 Garbage checker = belt.returnPopped();
+                System.out.println(checker.returnType());
                 if (checker.returnType().equals(Garbage.garbageTypes.GLASS) && checker.returnType().equals(typeStorage2)) {
                     scoreKeeper.add(100);
                     final long playGlassSound = glassSound.play(1.0f);
                     typeStorage2 = typeStorage;
                     typeStorage = checker.returnType();
-                    System.out.println(checker.returnType());
                 } else {
                     lives--;
                 }
                 timer=0;
-                System.out.println(typeStorage.toString() + "  " + typeStorage2.toString()+ "  " + checker.returnType().toString());
+                //System.out.println(typeStorage.toString() + "  " + typeStorage2.toString());
             }
         });
         plasticGarbageNONEButton.addListener(new ClickListener() {
@@ -183,13 +185,15 @@ public class MainGame extends ApplicationAdapter {
                 if(checker.returnType().equals(Garbage.garbageTypes.PLASTIC) && !checker.returnType().equals(typeStorage2)){
                     scoreKeeper.add(100);
                     final long playGlassSound = glassSound.play(1.0f);
+                    typeStorage2 = typeStorage;
+                    typeStorage = checker.returnType();
 
                 }
                 else{
                     lives--;
                 }
                 timer=0;
-                System.out.println(typeStorage.toString() + "  " + typeStorage2.toString());
+                //System.out.println(typeStorage.toString() + "  " + typeStorage2.toString());
             }
         });
         plasticGarbagePOSButton.addListener(new ClickListener() {
@@ -204,7 +208,7 @@ public class MainGame extends ApplicationAdapter {
                     lives--;
                 }
                 timer=0;
-                System.out.println(typeStorage.toString() + "  " + typeStorage2.toString());
+                //System.out.println(typeStorage.toString() + "  " + typeStorage2.toString());
             }
         });
         paperGarbageNONEButton.addListener(new ClickListener() {
@@ -213,13 +217,15 @@ public class MainGame extends ApplicationAdapter {
                 if(checker.returnType().equals(Garbage.garbageTypes.PAPER) && !checker.returnType().equals(typeStorage2)){
                     scoreKeeper.add(100);
                     final long playGlassSound = glassSound.play(1.0f);
+                    typeStorage2 = typeStorage;
+                    typeStorage = checker.returnType();
 
                 }
                 else{
                     lives--;
                 }
                 timer=0;
-                System.out.println(typeStorage.toString() + "  " + typeStorage2.toString());
+                //System.out.println(typeStorage.toString() + "  " + typeStorage2.toString());
             }
         });
         paperGarbagePOSButton.addListener(new ClickListener() {
@@ -234,7 +240,7 @@ public class MainGame extends ApplicationAdapter {
                     lives--;
                 }
                 timer=0;
-                System.out.println(typeStorage.toString() + "  " + typeStorage2.toString());
+                //System.out.println(typeStorage.toString() + "  " + typeStorage2.toString());
             }
         });
         /*plasticGarbageButton.addListener(new ClickListener() {
