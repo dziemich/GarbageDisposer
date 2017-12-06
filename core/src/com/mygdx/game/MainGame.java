@@ -31,7 +31,7 @@ public class MainGame extends ApplicationAdapter {
 	private Texture gameBackgroundImage, startBackgroundImage, beltImage, heartImage;
     Sprite heartSprite;
 	private Random rnd;
-	boolean startMenu = false;
+	boolean startMenu = true;
 	boolean endMenu = false;
 	private Stage stage;
 	private ImageButton startButton, endButton, glassGarbageButton, plasticGarbageButton, paperGarbageButton;
@@ -95,6 +95,7 @@ public class MainGame extends ApplicationAdapter {
         endButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y){
                 endMenu = false;
+                lives=3;
             }
         });
 
@@ -166,6 +167,7 @@ public class MainGame extends ApplicationAdapter {
             glassGarbageButton.setVisible(true);
             plasticGarbageButton.setVisible(true);
             paperGarbageButton.setVisible(true);
+            endButton.setVisible(false);
             scoreDisplay.draw(batch, "Score: " + scoreKeeper.getScore(), 710, 600);
 		}
         else if(endMenu){
@@ -181,6 +183,7 @@ public class MainGame extends ApplicationAdapter {
         }
         if(lives<1){
             endMenu=true;
+            scoreKeeper.resetScore();
         }
         belt.addToBelt(rnd);
         batch.end();
