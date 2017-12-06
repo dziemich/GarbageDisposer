@@ -1,4 +1,3 @@
-
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
@@ -14,9 +13,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.util.LinkedList;
@@ -135,37 +136,71 @@ public class MainGame extends ApplicationAdapter {
         endButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 endMenu = false;
-                lives = 3;
+                lives=3;
             }
         });
 
         startButton.addListener(new ClickListener() {
-            public void clicked(InputEvent event, float x, float y) {
+            public void clicked(InputEvent event, float x, float y){
                 startMenu = false;
             }
         });
         startButton.addListener(new ClickListener() {
-            public void clicked(InputEvent event, float x, float y) {
+            public void clicked(InputEvent event, float x, float y){
                 startMenu = false;
             }
         });
-
-        /*glassGarbageNONEButton.addListener(new ClickListener() {
-            public void clicked(InputEvent event, float x, float y) {
-                startMenu = false;
+        glassGarbageButton.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y){
+                Garbage check = belt.returnPopped();
+                if(check.returnType().equals(Garbage.garbageTypes.GLASS)){
+                    scoreKeeper.add(100);
+                    final long playGlassSound = glassSound.play(1.0f);
+                }
+                else{
+                    lives--;
+                }
             }
-        });*/
-    }
-    @Override
-    public void render () {
-        Gdx.gl.glClearColor(1, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        batch.begin();
-        if (startMenu) {
-            batch.draw(startBackgroundImage, 0, 0);
-            startButton.setVisible(true);
-        }
-        else if(!endMenu && !startMenu){
+        });
+        paperGarbageButton.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y){
+                if(belt.size()<7){
+                    Garbage.garbageTypes type = belt.checkType(belt.size()-5);
+                    if (type.equals(Garbage.garbageTypes.PAPER)) {
+                        scoreKeeper.add(100);
+                        final long playPaperSound = paperSound.play(1.0f);
+                    } else {
+                        lives--;
+                    }
+                } else {
+
+
+                }
+            }
+        });
+        plasticGarbageButton.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y){
+                Garbage check = belt.returnPopped();
+                if(check.returnType().equals(Garbage.garbageTypes.PLASTIC)){
+                    scoreKeeper.add(100);
+                    final long playPlasticSound = plasticSound.play(1.0f);
+                }
+                else {
+                    lives--;
+                }
+            }
+        });
+	}
+	@Override
+	public void render () {
+		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		batch.begin();
+		if (startMenu) {
+			batch.draw(startBackgroundImage, 0, 0);
+			startButton.setVisible(true);
+		}
+		else if(!endMenu && !startMenu){
             batch.draw(gameBackgroundImage, 0, 0);
             batch.draw(beltImage, 50, 400);
             batch.draw(glassBin, 40,0);
@@ -183,16 +218,19 @@ public class MainGame extends ApplicationAdapter {
                 a.setVisible(true);
             }
             startButton.setVisible(false);
+            glassGarbageButton.setVisible(true);
+            plasticGarbageButton.setVisible(true);
+            paperGarbageButton.setVisible(true);
             endButton.setVisible(false);
             scoreDisplay.draw(batch, "Score: " + scoreKeeper.getScore(), 710, 600);
 
-            /*timer+=Gdx.graphics.getRawDeltaTime();
+            timer+=Gdx.graphics.getRawDeltaTime();
             if(timer>delay){
                 belt.returnPopped();
                 lives--;
                 timer=0;
-            }*/
-        }
+            }
+		}
         else if(endMenu){
             batch.draw(startBackgroundImage, 0, 0);
             for(Actor a: stage.getActors()){
