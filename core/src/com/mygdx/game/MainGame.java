@@ -13,13 +13,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import java.util.LinkedList;
 import java.util.Random;
 
 public class MainGame extends ApplicationAdapter {
@@ -29,14 +28,16 @@ public class MainGame extends ApplicationAdapter {
 
 	SpriteBatch batch;
 	private Belt belt;
-	private Texture gameBackgroundImage, startBackgroundImage, beltImage, heartImage;
+	private Texture gameBackgroundImage, startBackgroundImage, beltImage, heartImage, glassBin, plasticBin, paperBin;
     Sprite heartSprite;
 	private Random rnd;
 	boolean startMenu = true;
 	boolean endMenu = false;
     private boolean timerIsOn=false;
 	private Stage stage;
-	private ImageButton startButton, endButton, glassGarbageButton, plasticGarbageButton, paperGarbageButton;
+	private ImageButton startButton, endButton, glassGarbageNONEButton, glassGarbagePOSButton, glassGarbageSOUNDButton, plasticGarbageNONEButton,
+            plasticGarbagePOSButton, plasticGarbageSOUNDButton, paperGarbageNONEButton, paperGarbagePOSButton, paperGarbageSOUNDButton;
+	private LinkedList<ImageButton> NbackButtonList;
     private ScoreKeeper scoreKeeper;
     private BitmapFont scoreDisplay;
     Sound bgSound, paperSound, plasticSound, glassSound;
@@ -44,20 +45,26 @@ public class MainGame extends ApplicationAdapter {
     private Long lifeTime;
     private float timer=0;
     private float delay = 4;
+    private int displayCounter =0;
+    private int moveToNextGarbage=0;
 
 
     @Override
 	public void create () {
-		batch = new SpriteBatch();
-		gameBackgroundImage = new Texture("core/assets/bg.jpg");
-		startBackgroundImage = new Texture("core/assets/startbg.jpg");
-		beltImage = new Texture("core/assets/Belt.png");
-		heartImage = new Texture("core/assets/Heart.png");
+        batch = new SpriteBatch();
+        gameBackgroundImage = new Texture("core/assets/bg.jpg");
+        startBackgroundImage = new Texture("core/assets/startbg.jpg");
+        beltImage = new Texture("core/assets/Belt.png");
+        heartImage = new Texture("core/assets/Heart.png");
+        glassBin = new Texture("core/assets/GlassGarbage.png");
+        plasticBin = new Texture("core/assets/PlasticGarbage.png");
+        paperBin = new Texture("core/assets/PaperGarbage.png");
         bgSound = Gdx.audio.newSound(Gdx.files.internal("core/assets/ogg/326639_monkeyman535_happy-music.ogg"));
         paperSound = Gdx.audio.newSound(Gdx.files.internal("core/assets/ogg/82378_gynation_paper-flip-2.ogg"));
         plasticSound = Gdx.audio.newSound(Gdx.files.internal("core/assets/ogg/405702_apinasaundi_found-plastic-bottle-1.ogg"));
         glassSound = Gdx.audio.newSound(Gdx.files.internal("core/assets/ogg/338692_natemarler_glass-break-small.ogg"));
         lifeTime = System.currentTimeMillis();
+        NbackButtonList = new LinkedList<ImageButton>();
         stage = new Stage(new ScreenViewport());
         belt = new Belt();
         rnd = new Random();
@@ -71,88 +78,83 @@ public class MainGame extends ApplicationAdapter {
 
         bgSound.loop(1.0f);
         //BUTTONS
-		startButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/StartMenu.png"))));
+        startButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/StartMenu.png"))));
         endButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/EndMenu.png"))));
-        glassGarbageButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/GlassGarbage.png"))));
-        plasticGarbageButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/PlasticGarbage.png"))));
-        paperGarbageButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/PaperGarbage.png"))));
 
-        startButton.setPosition(X_BUTTON_POS,Y_BUTTON_POS);
-        endButton.setPosition(X_BUTTON_POS,Y_BUTTON_POS);
-        glassGarbageButton.setPosition(X_GARBAGE_POS,0);
-        plasticGarbageButton.setPosition(X_GARBAGE_POS+250,0);
-        paperGarbageButton.setPosition(X_GARBAGE_POS+500,0);
+        glassGarbageNONEButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/pola/pole_none.png"))));
+        glassGarbagePOSButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/pola/pole_pos.png"))));
+        glassGarbageSOUNDButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/pola/pole_sound.png"))));
 
+        plasticGarbageNONEButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/pola/pole_none.png"))));
+        plasticGarbagePOSButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/pola/pole_pos.png"))));
+        plasticGarbageSOUNDButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/pola/pole_sound.png"))));
+
+        paperGarbageNONEButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/pola/pole_none.png"))));
+        paperGarbagePOSButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/pola/pole_pos.png"))));
+        paperGarbageSOUNDButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/pola/pole_sound.png"))));
+
+
+        startButton.setPosition(X_BUTTON_POS, Y_BUTTON_POS);
+        endButton.setPosition(X_BUTTON_POS, Y_BUTTON_POS);
+
+        NbackButtonList.add(glassGarbageNONEButton);
+        NbackButtonList.add(glassGarbagePOSButton);
+        NbackButtonList.add(glassGarbageSOUNDButton);
+        NbackButtonList.add(plasticGarbageNONEButton);
+        NbackButtonList.add(plasticGarbagePOSButton);
+        NbackButtonList.add(plasticGarbageSOUNDButton);
+        NbackButtonList.add(paperGarbageNONEButton);
+        NbackButtonList.add(paperGarbagePOSButton);
+        NbackButtonList.add(paperGarbageSOUNDButton);
+
+        for (ImageButton b : NbackButtonList) {
+            stage.addActor(b);
+        }
+        for(ImageButton b: NbackButtonList){
+            b.setSize(50f,50f);
+            if(displayCounter==3 || displayCounter==6) {
+                moveToNextGarbage+=1;
+            }
+            b.setPosition(50+65*displayCounter+55*moveToNextGarbage, 200);
+            displayCounter +=1;
+        }
         stage.addActor(startButton);
-        stage.addActor(glassGarbageButton);
-        stage.addActor(plasticGarbageButton);
-        stage.addActor(paperGarbageButton);
         stage.addActor(endButton);
 
-        for(Actor a: stage.getActors()){
+        for (Actor a : stage.getActors()) {
             a.setVisible(false);
         }
 
         startButton.addListener(new ClickListener() {
-            public void clicked(InputEvent event, float x, float y){
+            public void clicked(InputEvent event, float x, float y) {
                 startMenu = false;
             }
         });
 
         endButton.addListener(new ClickListener() {
-            public void clicked(InputEvent event, float x, float y){
+            public void clicked(InputEvent event, float x, float y) {
                 endMenu = false;
-                lives=3;
+                lives = 3;
             }
         });
 
         startButton.addListener(new ClickListener() {
-            public void clicked(InputEvent event, float x, float y){
+            public void clicked(InputEvent event, float x, float y) {
                 startMenu = false;
             }
         });
         startButton.addListener(new ClickListener() {
-            public void clicked(InputEvent event, float x, float y){
+            public void clicked(InputEvent event, float x, float y) {
                 startMenu = false;
             }
         });
-        glassGarbageButton.addListener(new ClickListener() {
-            public void clicked(InputEvent event, float x, float y){
-                Garbage check = belt.returnPopped();
-                if(check.returnType().equals(Garbage.garbageTypes.GLASS)){
-                    scoreKeeper.add(100);
-                    final long playGlassSound = glassSound.play(1.0f);
-                }
-                else{
-                    lives--;
-                }
+
+        /*glassGarbageNONEButton.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                startMenu = false;
             }
-        });
-        paperGarbageButton.addListener(new ClickListener() {
-            public void clicked(InputEvent event, float x, float y){
-                Garbage check = belt.returnPopped();
-                if(check.returnType().equals(Garbage.garbageTypes.PAPER)){
-                    scoreKeeper.add(100);
-                    final long playPaperSound = paperSound.play(1.0f);
-                }
-                else {
-                    lives--;
-                }
-            }
-        });
-        plasticGarbageButton.addListener(new ClickListener() {
-            public void clicked(InputEvent event, float x, float y){
-                Garbage check = belt.returnPopped();
-                if(check.returnType().equals(Garbage.garbageTypes.PLASTIC)){
-                    scoreKeeper.add(100);
-                    final long playPlasticSound = plasticSound.play(1.0f);
-                }
-                else {
-                    lives--;
-                }
-            }
-        });
-	}
+        });*/
+    }
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
@@ -165,6 +167,9 @@ public class MainGame extends ApplicationAdapter {
 		else if(!endMenu && !startMenu){
             batch.draw(gameBackgroundImage, 0, 0);
             batch.draw(beltImage, 50, 400);
+            batch.draw(glassBin, 40,0);
+            batch.draw(plasticBin, 290,0);
+            batch.draw(paperBin, 540,0);
             int offset = 0;
             for(Garbage g : belt.getGarbageList()){
                 batch.draw(g.getGarbageImage(), 550-offset, 450);
@@ -173,26 +178,25 @@ public class MainGame extends ApplicationAdapter {
             for(int i=0; i<lives; ++i){
                 batch.draw(heartImage, 750-50*i, 530, 50, 50);
             }
+            for(Actor a : stage.getActors()){
+                a.setVisible(true);
+            }
             startButton.setVisible(false);
-            glassGarbageButton.setVisible(true);
-            plasticGarbageButton.setVisible(true);
-            paperGarbageButton.setVisible(true);
             endButton.setVisible(false);
             scoreDisplay.draw(batch, "Score: " + scoreKeeper.getScore(), 710, 600);
 
-            timer+=Gdx.graphics.getRawDeltaTime();
+            /*timer+=Gdx.graphics.getRawDeltaTime();
             if(timer>delay){
                 belt.returnPopped();
                 lives--;
                 timer=0;
-            }
+            }*/
 		}
         else if(endMenu){
             batch.draw(startBackgroundImage, 0, 0);
-            startButton.setVisible(false);
-            glassGarbageButton.setVisible(false);
-            plasticGarbageButton.setVisible(false);
-            paperGarbageButton.setVisible(false);
+            for(Actor a: stage.getActors()){
+                a.setVisible(false);
+            }
             endButton.setVisible(true);
         }
         if(lives<1){
