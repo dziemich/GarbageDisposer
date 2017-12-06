@@ -130,13 +130,17 @@ public class MainGame extends ApplicationAdapter {
         });
         paperGarbageButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y){
-                Garbage check = belt.returnPopped();
-                if(check.returnType().equals(Garbage.garbageTypes.PAPER)){
-                    scoreKeeper.add(100);
-                    final long playPaperSound = paperSound.play(1.0f);
-                }
-                else {
-                    lives--;
+                if(belt.size()<7){
+                    Garbage.garbageTypes type = belt.checkType(belt.size()-5);
+                    if (type.equals(Garbage.garbageTypes.PAPER)) {
+                        scoreKeeper.add(100);
+                        final long playPaperSound = paperSound.play(1.0f);
+                    } else {
+                        lives--;
+                    }
+                } else {
+
+
                 }
             }
         });
@@ -179,7 +183,6 @@ public class MainGame extends ApplicationAdapter {
             paperGarbageButton.setVisible(true);
             endButton.setVisible(false);
             scoreDisplay.draw(batch, "Score: " + scoreKeeper.getScore(), 710, 600);
-
             timer+=Gdx.graphics.getRawDeltaTime();
             if(timer>delay){
                 belt.returnPopped();
