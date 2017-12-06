@@ -1,3 +1,4 @@
+
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
@@ -26,18 +27,18 @@ public class MainGame extends ApplicationAdapter {
     private static final int Y_BUTTON_POS=250;
     private static final int X_GARBAGE_POS=50;
 
-	SpriteBatch batch;
-	private Belt belt;
-	private Texture gameBackgroundImage, startBackgroundImage, beltImage, heartImage, glassBin, plasticBin, paperBin;
+    SpriteBatch batch;
+    private Belt belt;
+    private Texture gameBackgroundImage, startBackgroundImage, beltImage, heartImage, glassBin, plasticBin, paperBin;
     Sprite heartSprite;
-	private Random rnd;
-	boolean startMenu = true;
-	boolean endMenu = false;
+    private Random rnd;
+    boolean startMenu = true;
+    boolean endMenu = false;
     private boolean timerIsOn=false;
-	private Stage stage;
-	private ImageButton startButton, endButton, glassGarbageNONEButton, glassGarbagePOSButton, glassGarbageSOUNDButton, plasticGarbageNONEButton,
+    private Stage stage;
+    private ImageButton startButton, endButton, glassGarbageNONEButton, glassGarbagePOSButton, glassGarbageSOUNDButton, plasticGarbageNONEButton,
             plasticGarbagePOSButton, plasticGarbageSOUNDButton, paperGarbageNONEButton, paperGarbagePOSButton, paperGarbageSOUNDButton;
-	private LinkedList<ImageButton> NbackButtonList;
+    private LinkedList<ImageButton> NbackButtonList;
     private ScoreKeeper scoreKeeper;
     private BitmapFont scoreDisplay;
     Sound bgSound, paperSound, plasticSound, glassSound;
@@ -50,7 +51,7 @@ public class MainGame extends ApplicationAdapter {
 
 
     @Override
-	public void create () {
+    public void create () {
         batch = new SpriteBatch();
         gameBackgroundImage = new Texture("core/assets/bg.jpg");
         startBackgroundImage = new Texture("core/assets/startbg.jpg");
@@ -155,16 +156,16 @@ public class MainGame extends ApplicationAdapter {
             }
         });*/
     }
-	@Override
-	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		if (startMenu) {
-			batch.draw(startBackgroundImage, 0, 0);
-			startButton.setVisible(true);
-		}
-		else if(!endMenu && !startMenu){
+    @Override
+    public void render () {
+        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        batch.begin();
+        if (startMenu) {
+            batch.draw(startBackgroundImage, 0, 0);
+            startButton.setVisible(true);
+        }
+        else if(!endMenu && !startMenu){
             batch.draw(gameBackgroundImage, 0, 0);
             batch.draw(beltImage, 50, 400);
             batch.draw(glassBin, 40,0);
@@ -191,7 +192,7 @@ public class MainGame extends ApplicationAdapter {
                 lives--;
                 timer=0;
             }*/
-		}
+        }
         else if(endMenu){
             batch.draw(startBackgroundImage, 0, 0);
             for(Actor a: stage.getActors()){
@@ -208,12 +209,12 @@ public class MainGame extends ApplicationAdapter {
         stage.getBatch();
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
-	}
-	@Override
-	public void dispose() {
-		batch.dispose();
-		gameBackgroundImage.dispose();
-		startBackgroundImage.dispose();
-		stage.dispose();
-	}
+    }
+    @Override
+    public void dispose() {
+        batch.dispose();
+        gameBackgroundImage.dispose();
+        startBackgroundImage.dispose();
+        stage.dispose();
+    }
 }
