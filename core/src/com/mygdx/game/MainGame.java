@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Timer;
@@ -51,11 +52,14 @@ public class MainGame extends ApplicationAdapter {
     private Long lifeTime;
     private float timer=0;
     private float gameTimer=0;
-    private float delay = 5;
+    private float delay = 6;
     private int displayCounter =0;
     private int moveToNextGarbage=0;
     Garbage.garbageTypes typeStorage;
     Garbage.garbageTypes typeStorage2;
+
+    Label scoreLabel;
+
     //Garbage.soundTypes soundStorage;
 
     @Override
@@ -81,8 +85,8 @@ public class MainGame extends ApplicationAdapter {
         scoreKeeper = new ScoreKeeper();
         belt.firstTimeBelt(rnd);
         scoreDisplay = new BitmapFont();
-        /*scoreDisplay.setColor(Color.WHITE);
-        scoreDisplay.getData().setScale(1.2f);*/
+        scoreDisplay.setColor(Color.WHITE);
+        scoreDisplay.getData().setScale(1.2f);
         timeDisplay = new BitmapFont();
         timeDisplay.setColor(Color.WHITE);
         timeDisplay.getData().setScale(1.5f);
@@ -154,6 +158,7 @@ public class MainGame extends ApplicationAdapter {
 
         endButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
+                startMenu=true;
                 endMenu = false;
                 lives=3;
             }
@@ -186,6 +191,7 @@ public class MainGame extends ApplicationAdapter {
                     final long playGlassSound = glassSound.play(1.0f);
                     typeStorage2 = typeStorage;
                     typeStorage = checker.returnType();
+                    nBackTracker.incrementPlayerHits();
                 } else {
                     lives--;
                 }
@@ -203,7 +209,6 @@ public class MainGame extends ApplicationAdapter {
                     final long playGlassSound = glassSound.play(1.0f);
                     typeStorage2 = typeStorage;
                     typeStorage = checker.returnType();
-
                 }
                 else{
                     lives--;
@@ -239,7 +244,7 @@ public class MainGame extends ApplicationAdapter {
                     final long playGlassSound = glassSound.play(1.0f);
                     typeStorage2 = typeStorage;
                     typeStorage = checker.returnType();
-
+                    nBackTracker.incrementPlayerHits();
                 }
                 else{
                     lives--;
@@ -258,6 +263,7 @@ public class MainGame extends ApplicationAdapter {
                     final long playGlassSound = glassSound.play(1.0f);
                     typeStorage2 = typeStorage;
                     typeStorage = checker.returnType();
+                    nBackTracker.incrementPlayerHits();
                 } else {
                     lives--;
                 }
@@ -266,26 +272,15 @@ public class MainGame extends ApplicationAdapter {
                 //System.out.println(typeStorage.toString() + "  " + typeStorage2.toString());
             }
         });
-        /*plasticGarbageButton.addListener(new ClickListener() {
-            public void clicked(InputEvent event, float x, float y){
-                Garbage check = belt.returnPopped();
-                if(check.returnType().equals(Garbage.garbageTypes.PLASTIC)){
-                    scoreKeeper.add(100);
-                    final long playPlasticSound = plasticSound.play(1.0f);
-                }
-                else {
-                    lives--;
-                }
-            }
-        });*/
-	}
+    }
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		if (startMenu) {
-			batch.draw(startBackgroundImage, 0, 0);
+            scoreKeeper.resetScore();
+		    batch.draw(startBackgroundImage, 0, 0);
 			startButton.setVisible(true);
 		}
 		else if(!endMenu && !startMenu){
@@ -313,12 +308,12 @@ public class MainGame extends ApplicationAdapter {
             if(gameTimer>30){
                 endMenu=true;
             }
-            /*timer+=Gdx.graphics.getRawDeltaTime();
+            timer+=Gdx.graphics.getRawDeltaTime();
             if(timer>delay){
                 belt.returnPopped();
                 lives--;
                 timer=0;
-            }*/
+            }
 		}
         else if(endMenu){
             batch.draw(startBackgroundImage, 0, 0);
@@ -326,10 +321,13 @@ public class MainGame extends ApplicationAdapter {
                 a.setVisible(false);
             }
             endButton.setVisible(true);
+            scoreDisplay.draw(batch, "Your score was: " + scoreKeeper.getScore(), 350, 200);
+            scoreDisplay.draw(batch, "You hit: " + nBackTracker.getPlayerHits() +"out of " + nBackTracker.getOccurence(), 350, 100);
+
         }
         /*if(lives<1){
             endMenu=true;
-            scoreKeeper.resetScore();
+
         }*/
         belt.addToBelt(rnd);
         batch.end();
@@ -342,6 +340,9 @@ public class MainGame extends ApplicationAdapter {
         batch.dispose();
         gameBackgroundImage.dispose();
         startBackgroundImage.dispose();
+        glassBin.dispose();
+        plasticBin.dispose();
+        paperBin.dispose();
         stage.dispose();
     }
 }
