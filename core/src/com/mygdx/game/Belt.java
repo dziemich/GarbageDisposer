@@ -1,5 +1,7 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -18,19 +20,26 @@ public class Belt {
         return garbageList.pop();
     }
 
-    public Garbage.garbageTypes popAndCheck(int pos){
+    /*public Garbage.garbageTypes popAndCheck(int pos){
         Garbage popped = garbageList.remove(pos);
         return popped.returnType();
-    }
+    }*/
 
-    public Garbage.soundTypes checkSound(int pos){
+   /* public Garbage.soundTypes checkSound(int pos){
         return garbageList.get(pos).returnSound();
-    }
+    }*/
 
     public Garbage.garbageTypes checkType(int pos){
         return garbageList.get(pos).returnType();
     }
-
+    public void displayBelt(Random generator, SpriteBatch batch){
+        int offset = 0;
+        for(Garbage g: garbageList){
+            batch.draw(g.getGarbageImage(), 550 - offset, 450);
+            offset+=113;
+        }
+        addToBelt(generator);
+    }
     public int size(){
         return garbageList.size();
     }
