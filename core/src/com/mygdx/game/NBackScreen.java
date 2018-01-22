@@ -29,7 +29,7 @@ public class NBackScreen implements Screen {
     int level = 2;
     Random rndGen;
     private float timer;
-    private float delay=3;
+    private float delay=0.5f;
     private boolean firstTime = true;
 
     public NBackScreen(MainGame game) {
