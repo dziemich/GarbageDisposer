@@ -28,6 +28,8 @@ public class MainMenuScreen implements Screen {
     OrthographicCamera camera;
 
     public MainMenuScreen(final MainGame game, final NBackGame gameNback) {
+
+
         this.game = game;
         this.gameNback = gameNback;
         stage = new Stage();
