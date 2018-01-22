@@ -46,7 +46,6 @@ public class Belt {
 
     public void addToBelt(Random generator){
         if(garbageList.size() <6) {
-            //garbageList.add(new GlassGarbage());
             int switcher = generator.nextInt(3);
             switch (switcher) {
                 case 0:
