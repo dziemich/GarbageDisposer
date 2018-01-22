@@ -18,56 +18,48 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 public class MainMenuScreen implements Screen {
 
     final MainGame game;
-    final NBackGame gameNback;
     private final ImageButton startGarbageButton;
     private final ImageButton startNBackButton;
-    private final ImageButton startButton;
-    private final ImageButton endButton;
+
 
     Stage stage;
     OrthographicCamera camera;
 
-    public MainMenuScreen(final MainGame game, final NBackGame gameNback) {
+    public MainMenuScreen(final MainGame game) {
 
 
         this.game = game;
-        this.gameNback = gameNback;
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 600);
         startGarbageButton =   new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/StartMenu.png"))));
-        startNBackButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("tu ma byc sciezka do ikonki"))));
+        startNBackButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/EndMenu.png"))));
         startGarbageButton.setPosition(180, 250);
-        startNBackButton.setPosition(180, 200);//ustawić dobre wspolrzędne
+        startNBackButton.setPosition(180, 50);//ustawić dobre wspolrzędne
+
+       //endButton.setPosition(180, 250);
+
         startGarbageButton.addListener(new ClickListener() {
-
-        startButton =   new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/StartMenu.png"))));
-        endButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/EndMenu.png"))));
-
-
-        startButton.setPosition(180, 250);
-        endButton.setPosition(180, 250);
-
-        startButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 MainGame.moveToGameScreen=true;
                 MainGame.startMenu=false;
             }
         });
+
         startNBackButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                NBackGame.moveToGameScreen=true;
-                NBackGame.startMenu=false;
+                MainGame.moveToNBackGame = true;
+                MainGame.startMenu=false;
             }
         });
 
-        endButton.addListener(new ClickListener(){
+        /*endButton.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y){
                 MainGame.startMenu = true;
                 MainGame.endMenu = false;
             }
-        });
+        });*/
 
     }
 
@@ -90,10 +82,9 @@ public class MainMenuScreen implements Screen {
         stage.addActor(table);
 
         game.batch.begin();
-        gameNback.batch.begin();
 
         stage.addActor(startGarbageButton);
-        stage.addActor(startButton);
+        stage.addActor(startGarbageButton);
         if(MainGame.moveToGameScreen){
             game.setScreen(new GameScreen(game));
             System.out.println("test");
@@ -103,15 +94,14 @@ public class MainMenuScreen implements Screen {
         stage.draw();
 
         stage.addActor(startNBackButton);
-        if(NBackGame.moveToGameScreen){
-            game.setScreen(new NBackScreen(gameNback));
+        if(MainGame.moveToNBackGame){
+            game.setScreen(new NBackScreen(game));
             System.out.println("test");
             dispose();
             System.out.println("nback dziala");
         }
         stage.draw();
         game.batch.end();
-        gameNback.batch.end();
     }
 
     @Override

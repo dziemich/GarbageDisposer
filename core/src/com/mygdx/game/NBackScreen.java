@@ -14,15 +14,14 @@ import java.util.Random;
 
 public class NBackScreen implements Screen {
     Stage stage;
-    final NBackGame game;
+    final MainGame game;
     OrthographicCamera camera;
     Belt belt;
     Random rndGen;
 
-    public NBackScreen(NBackGame game) {
+    public NBackScreen(MainGame game) {
         this.game = game;
         stage = new Stage();
-        Buttons.load(stage);
         Assets.load();
         belt = new Belt();
         rndGen = new Random();
@@ -40,7 +39,6 @@ public class NBackScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.batch.begin();
         Assets.displayMainGame(game.batch);
-        Buttons.display(stage, MainGame.startMenu,MainGame.endMenu);
         belt.displayBelt(rndGen, game.batch);
         stage.draw();
         game.batch.end();

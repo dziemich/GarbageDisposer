@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -21,12 +20,11 @@ public class MainGame extends Game {
     public Belt belt;
     public Random rnd;
 
-    FreeTypeFontGenerator generator;
-    FreeTypeFontGenerator.FreeTypeFontParameter parameter;
 
 
     public static boolean startMenu = true;
     public static boolean moveToGameScreen = false;
+    public static boolean moveToNBackGame = false;
     public static boolean endMenu = false;
     public static ScoreKeeper scoreKeeper;
     public static float timer=0;
