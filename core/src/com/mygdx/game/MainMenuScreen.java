@@ -19,6 +19,8 @@ public class MainMenuScreen implements Screen {
 
     final MainGame game;
     private final ImageButton startButton;
+    private final ImageButton endButton;
+
     Stage stage;
     OrthographicCamera camera;
 
@@ -30,12 +32,25 @@ public class MainMenuScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 600);
+
         startButton =   new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/StartMenu.png"))));
+        endButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/EndMenu.png"))));
+
+
         startButton.setPosition(180, 250);
+        endButton.setPosition(180, 250);
+
         startButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 MainGame.moveToGameScreen=true;
                 MainGame.startMenu=false;
+            }
+        });
+
+        endButton.addListener(new ClickListener(){
+            public void clicked(InputEvent event, float x, float y){
+                MainGame.startMenu = true;
+                MainGame.endMenu = false;
             }
         });
 
@@ -60,13 +75,10 @@ public class MainMenuScreen implements Screen {
         stage.addActor(table);
 
         game.batch.begin();
-
         stage.addActor(startButton);
         if(MainGame.moveToGameScreen){
             game.setScreen(new GameScreen(game));
-            System.out.println("test");
             dispose();
-            System.out.println("dispose dziala");
         }
         stage.draw();
         game.batch.end();

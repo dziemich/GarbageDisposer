@@ -45,7 +45,7 @@ public class Belt {
     }
 
     public void addToBelt(Random generator){
-        if(garbageList.size() <5) {
+        if(garbageList.size() <6) {
             //garbageList.add(new GlassGarbage());
             int switcher = generator.nextInt(3);
             switch (switcher) {
@@ -61,7 +61,7 @@ public class Belt {
         }
     }
     public void firstTimeBelt(Random generator){
-        for(int i=0; i<5; ++i){
+        for(int i=0; i<6; ++i){
             addToBelt(generator);
         }
     }

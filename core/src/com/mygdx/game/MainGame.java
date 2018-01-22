@@ -18,12 +18,30 @@ public class MainGame extends Game {
 
     public SpriteBatch batch;
     public BitmapFont font;
+    public Belt belt;
+    public Random rnd;
+
+    FreeTypeFontGenerator generator;
+    FreeTypeFontGenerator.FreeTypeFontParameter parameter;
+
+
+    public static boolean startMenu = true;
+    public static boolean moveToGameScreen = false;
+    public static boolean endMenu = false;
+    public static ScoreKeeper scoreKeeper;
+    public static float timer=0;
+    public static float gameTimer=0;
 
     public void create() {
         batch = new SpriteBatch();
-        //Use LibGDX's default Arial font.
-        font = new BitmapFont();
+        belt = new Belt();
+        rnd = new Random();
+        belt.firstTimeBelt(rnd);
+        scoreKeeper = new ScoreKeeper();
         this.setScreen(new MainMenuScreen(this));
+
+
+
     }
 
     public void render() {
@@ -32,7 +50,6 @@ public class MainGame extends Game {
 
     public void dispose() {
         batch.dispose();
-        font.dispose();
     }
 
    private static final int X_BUTTON_POS=180;
@@ -40,25 +57,17 @@ public class MainGame extends Game {
     private static final int X_GARBAGE_POS=50;
 
     //SpriteBatch batch;
-    public static Belt belt;
-    private Random rnd;
-    public static boolean startMenu = true;
-    public static boolean moveToGameScreen = false;
-    public static boolean endMenu = false;
+
+
+
     private Stage stage;
-    public static ScoreKeeper scoreKeeper;
+
     public static NBackTracker nBackTracker;
-    public static BitmapFont bitMapDisplay, timeDisplay;
     Sound bgSound, paperSound, plasticSound, glassSound;
     public static int lives= 3;
     private Long lifeTime;
-    public static float timer=0;
-    public static float gameTimer=0;
-    private float delay = 6;
-    public static Garbage.garbageTypes typeStorage;
-    public static Garbage.garbageTypes typeStorage2;
-    public boolean startHandler=true;
-    public boolean endHandler=false;
+
+
 }
 
 /*    @Override
