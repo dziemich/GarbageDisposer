@@ -43,6 +43,5 @@ public class Assets {
     public static void displayNBackGame(SpriteBatch batch) {
         batch.draw(gameBackgroundImage, 0, 0);
         batch.draw(grid, 50, 50);
-        batch.draw(beltImage, 50, 400);
     }
 }

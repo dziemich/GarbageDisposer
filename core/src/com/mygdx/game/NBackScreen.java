@@ -21,6 +21,7 @@ public class NBackScreen implements Screen {
     private final ImageButton typeButton;
     private final ImageButton positionAndTypeButton;
     private final LinkedList<ImageButton> posList;
+    private final TextureRegion costam;
     NBackBoard board;
     Stage stage;
     final MainGame game;
@@ -42,6 +43,7 @@ public class NBackScreen implements Screen {
         typeButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/pola/pole_typ.png"))));
         positionAndTypeButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/pola/pole_both.png"))));
 
+        costam = new TextureRegion(new Texture("core/assets/pola/pole_both.png"));
 
         positionButton.setPosition(550,350);
         typeButton.setPosition(550,200);
@@ -94,7 +96,7 @@ public class NBackScreen implements Screen {
             board.randomAndAdd(game.batch);
             timer = 0;
         }
-
+        game.batch.draw(costam, 1200, 1200);
         stage.draw();
         game.batch.end();
     }

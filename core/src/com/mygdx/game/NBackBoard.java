@@ -88,15 +88,6 @@ public class NBackBoard {
         int number = generator.nextInt((3 - 1) + 1) + 1;
         switch(number){
             case 1:
-<<<<<<< Updated upstream
-                type = Garbage.garbageTypes.PAPER;
-                break;
-            case 2:
-                type = Garbage.garbageTypes.GLASS;
-                break;
-            case 3:
-                type = Garbage.garbageTypes.PLASTIC;
-=======
                 type = new GlassGarbage();
                 break;
             case 2:
@@ -104,7 +95,6 @@ public class NBackBoard {
                 break;
             case 3:
                 type = new PaperGarbage();
->>>>>>> Stashed changes
                 break;
         }
         return type;
