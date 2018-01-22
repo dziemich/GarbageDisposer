@@ -28,6 +28,8 @@ public class NBackScreen implements Screen {
     int level = 2;
     Belt belt;
     Random rndGen;
+    private float timer;
+    private float delay=3;
 
     public NBackScreen(MainGame game) {
         this.game = game;
@@ -86,6 +88,13 @@ public class NBackScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.batch.begin();
         Assets.displayNBackGame(game.batch);
+
+        timer += Gdx.graphics.getRawDeltaTime();
+        if (timer > delay) {
+            board.randomAndAdd(game.batch);
+            timer = 0;
+        }
+
         stage.draw();
         game.batch.end();
     }

@@ -26,26 +26,69 @@ public class NBackBoard {
         boardNBackType.add(type);
     }
 
-    public void randomAndAdd(){
-        Garbage.garbageTypes type = null;
+    public void randomAndAdd(SpriteBatch b){
+        Garbage type = null;
         int position;
+        float x=0;
+        float y=0;
         type = randomGarbage();
         position = randomPosition();
-        addNewEvent(type, position);
+        addNewEvent(type.returnType(), position);
+        switch (position){
+            case 1:
+                x= 300;
+                y= 300;
+                break;
+            case 2:
+                x= 350;
+                y= 300;
+                break;
+            case 3:
+                x= 400;
+                y= 300;
+                break;
+            case 4:
+                x= 300;
+                y= 350;
+                break;
+            case 5:
+                x= 350;
+                y= 350;
+                break;
+            case 6:
+                x= 350;
+                y= 400;
+                break;
+            case 7:
+                x= 400;
+                y= 300;
+                break;
+            case 8:
+                x= 400;
+                y= 350;
+                break;
+            case 9:
+                x= 400;
+                y= 400;
+                break;
+
+        }
+        b.draw(type.getGarbageImage(), x, y);
     }
 
     public Integer randomPosition(){
         Random generator = new Random();
-        int position = generator.nextInt((9 - 1) + 1) + 1;
+        int position = generator.nextInt((9 - 1) + 1) + 1; // XDDDDDD
         return position;
     }
 
-    public Garbage.garbageTypes randomGarbage(){
-        Garbage.garbageTypes type = null;
+    public Garbage randomGarbage(){
+        Garbage type = null;
         Random generator = new Random();
         int number = generator.nextInt((3 - 1) + 1) + 1;
         switch(number){
             case 1:
+<<<<<<< Updated upstream
                 type = Garbage.garbageTypes.PAPER;
                 break;
             case 2:
@@ -53,6 +96,15 @@ public class NBackBoard {
                 break;
             case 3:
                 type = Garbage.garbageTypes.PLASTIC;
+=======
+                type = new GlassGarbage();
+                break;
+            case 2:
+                type = new PlasticGarbage();
+                break;
+            case 3:
+                type = new PaperGarbage();
+>>>>>>> Stashed changes
                 break;
         }
         return type;
@@ -60,29 +112,30 @@ public class NBackBoard {
 
     public void checkNBackPosition(int level){
         if(checkPosition(0) == checkPosition(level)){
-            removeLast();
+            removeFirst();
+            //xD najlepszy if w miescie
         }else{
-            removeLast();
+            removeFirst();
         }
     }
 
     public void checkNBackType(int level){
         if(checkType(0).equals(checkType(level))){
-            removeLast();
+            removeFirst();
         }else{
-            removeLast();
+            removeFirst();
         }
     }
 
     public void checkNBackTypeAndPosition(int level){
         if((checkPosition(0) == checkPosition(level)) && (checkType(0).equals(checkType(level)))){
-            removeLast();
+            removeFirst();
         }else{
-            removeLast();
+            removeFirst();
         }
     }
 
-    public void removeLast(){
+    public void removeFirst(){
         boardNBackPosition.remove(0);
         boardNBackType.remove(0);
     }
