@@ -55,7 +55,9 @@ public class NBackBoard {
         return type;
     }
 
-    public int checkNBack()
+    public int checkNBack(){
+        return 0;
+    }
 
     public void printEvent(Garbage type, int position){
 

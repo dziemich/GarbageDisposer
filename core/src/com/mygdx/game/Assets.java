@@ -15,11 +15,13 @@ public class Assets {
     private static TextureRegion heartImage;
     private static BitmapFont bitMapDisplay;
     private static FreeTypeFontGenerator generator;
+    private static TextureRegion grid;
 
     public static void load() {
 
         gameBackgroundImage =new TextureRegion(new Texture("core/assets/bg.jpg"));
         beltImage = new TextureRegion(new Texture("core/assets/Belt.png"));
+        grid= new TextureRegion(new Texture("core/assets/Grid.png"));
         bitMapDisplay = new BitmapFont();
 
         /*generator = new FreeTypeFontGenerator(Gdx.files.internal("core/assets/font/LLPIXEL3.ttf"));
@@ -29,22 +31,18 @@ public class Assets {
 
     }
 
-    public static void displayMainGame(SpriteBatch batch ){
+    public static void displayMainGame(SpriteBatch batch) {
 
         batch.draw(gameBackgroundImage, 0, 0);
         batch.draw(beltImage, 50, 400);
         bitMapDisplay.setColor(Color.BLACK);
         bitMapDisplay.draw(batch, "Score: " + MainGame.scoreKeeper.getScore(), 620, 600);
         bitMapDisplay.draw(batch, String.valueOf(30 - (int) MainGame.gameTimer), 380, 600);
-
-
-            /*batch.draw(glassBin, 40, 0);
-            batch.draw(plasticBin, 290, 0);
-            batch.draw(paperBin, 540, 0);*/
-
-            //batch.draw(allGarbages, 40,100);
-
-
-
-        }
     }
+
+    public static void displayNBackGame(SpriteBatch batch) {
+        batch.draw(gameBackgroundImage, 0, 0);
+        batch.draw(grid, 50, 50);
+        batch.draw(beltImage, 50, 400);
+    }
+}

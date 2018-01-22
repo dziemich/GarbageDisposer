@@ -33,10 +33,12 @@ public class MainMenuScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 600);
-        startGarbageButton =   new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/StartMenu.png"))));
-        startNBackButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/EndMenu.png"))));
-        startGarbageButton.setPosition(180, 250);
-        startNBackButton.setPosition(180, 50);//ustawić dobre wspolrzędne
+        startGarbageButton =   new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/StartMenu.bmp"))));
+        startNBackButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/EndMenu.bmp"))));
+        startGarbageButton.setSize(350, 180);
+        startNBackButton.setSize(350, 180);
+        startGarbageButton.setPosition(220, 300);
+        startNBackButton.setPosition(220, 100);//ustawić dobre wspolrzędne
 
        //endButton.setPosition(180, 250);
 
