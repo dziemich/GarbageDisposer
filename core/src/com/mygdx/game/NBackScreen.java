@@ -27,7 +27,6 @@ public class NBackScreen implements Screen {
     final MainGame game;
     OrthographicCamera camera;
     int level = 2;
-    Belt belt;
     Random rndGen;
     private float timer;
     private float delay=3;

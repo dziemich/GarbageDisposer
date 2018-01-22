@@ -5,15 +5,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.*;
 
 public class NBackBoard {
-    private LinkedList<Garbage.garbageTypes> boardNBackType;
+    private LinkedList<Garbage> boardNBackType;
     private LinkedList<Integer> boardNBackPosition;
 
     public NBackBoard(){
-        boardNBackType = new LinkedList<Garbage.garbageTypes>();
+        boardNBackType = new LinkedList<Garbage>();
         boardNBackPosition = new LinkedList<Integer>();
     }
 
-    public Garbage.garbageTypes checkType(int pos){
+    public Garbage checkType(int pos){
         return boardNBackType.get(pos);
     }
 
@@ -21,7 +21,7 @@ public class NBackBoard {
         return boardNBackPosition.get(pos);
     }
 
-    public void addNewEvent(Garbage.garbageTypes type, int position){
+    public void addNewEvent(Garbage type, int position){
         boardNBackPosition.add(position);
         boardNBackType.add(type);
     }
@@ -33,7 +33,7 @@ public class NBackBoard {
         float y=0;
         type = randomGarbage();
         position = randomPosition();
-        addNewEvent(type.returnType(), position);
+        addNewEvent(type, position);
         switch (position){
             case 1:
                 x= 300;
