@@ -15,10 +15,18 @@ import static com.mygdx.game.MainGame.nBackTracker;
 import static com.mygdx.game.MainGame.scoreKeeper;
 
 public class Buttons {
-    private static ImageButton startButton, endButton, glassGarbageNONEButton, glassGarbagePOSButton, glassGarbageSOUNDButton, plasticGarbageNONEButton,
-            plasticGarbagePOSButton, plasticGarbageSOUNDButton, paperGarbageNONEButton, paperGarbagePOSButton, paperGarbageSOUNDButton;
+    public static ImageButton startButton;
+    public static ImageButton endButton;
+    public static ImageButton glassGarbageNONEButton;
+    public static ImageButton glassGarbagePOSButton;
+    public static ImageButton glassGarbageSOUNDButton;
+    public static ImageButton plasticGarbageNONEButton;
+    public static ImageButton plasticGarbagePOSButton;
+    public static ImageButton plasticGarbageSOUNDButton;
+    public static ImageButton paperGarbageNONEButton;
+    public static ImageButton paperGarbagePOSButton;
+    public static ImageButton paperGarbageSOUNDButton;
     static LinkedList<ImageButton> NbackButtonList = new LinkedList<ImageButton>();
-
 
     public static void load(Stage stage) {
         startButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/StartMenu.png"))));
@@ -36,7 +44,7 @@ public class Buttons {
         paperGarbagePOSButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/pola/pole_pos.png"))));
         paperGarbageSOUNDButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/pola/pole_sound.png"))));
 
-        startButton.setPosition(180,250);
+        startButton.setPosition(180, 250);
         endButton.setPosition(180, 250);
 
         NbackButtonList.add(glassGarbageNONEButton);
@@ -48,18 +56,23 @@ public class Buttons {
         NbackButtonList.add(paperGarbageNONEButton);
         NbackButtonList.add(paperGarbagePOSButton);
         NbackButtonList.add(paperGarbageSOUNDButton);
+        int c=0;
+        for(ImageButton b: NbackButtonList ){
+            System.out.println(c);
+            c++;
+            }
 
         startButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                MainGame.startMenu = false;
+                MainGame.moveToGameScreen=true;
+                MainGame.startMenu=false;
             }
         });
-
         endButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                MainGame.startMenu=true;
+                MainGame.startMenu = true;
                 MainGame.endMenu = false;
-                MainGame.lives=3;
+                MainGame.lives = 3;
                 scoreKeeper.resetScore();
             }
         });
@@ -171,7 +184,6 @@ public class Buttons {
                 //System.out.println(MainGame.typeStorage.toString() + "  " + MainGame.typeStorage2.toString());
             }
         });
-
         int displayCounter =0;
         int moveToNextGarbage=0;
         for (ImageButton b : NbackButtonList) {
@@ -187,6 +199,7 @@ public class Buttons {
         }
         stage.addActor(startButton);
         stage.addActor(endButton);
+
         }
 
     public static void display(Stage stage, boolean startMenu, boolean endMenu) {

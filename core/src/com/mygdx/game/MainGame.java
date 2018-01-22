@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
@@ -13,15 +14,36 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.util.Random;
 
-public class MainGame extends ApplicationAdapter {
-    private static final int X_BUTTON_POS=180;
+public class MainGame extends Game {
+
+    public SpriteBatch batch;
+    public BitmapFont font;
+
+    public void create() {
+        batch = new SpriteBatch();
+        //Use LibGDX's default Arial font.
+        font = new BitmapFont();
+        this.setScreen(new MainMenuScreen(this));
+    }
+
+    public void render() {
+        super.render(); //important!
+    }
+
+    public void dispose() {
+        batch.dispose();
+        font.dispose();
+    }
+
+   private static final int X_BUTTON_POS=180;
     private static final int Y_BUTTON_POS=250;
     private static final int X_GARBAGE_POS=50;
 
-    SpriteBatch batch;
+    //SpriteBatch batch;
     public static Belt belt;
     private Random rnd;
     public static boolean startMenu = true;
+    public static boolean moveToGameScreen = false;
     public static boolean endMenu = false;
     private Stage stage;
     public static ScoreKeeper scoreKeeper;
@@ -35,8 +57,11 @@ public class MainGame extends ApplicationAdapter {
     private float delay = 6;
     public static Garbage.garbageTypes typeStorage;
     public static Garbage.garbageTypes typeStorage2;
+    public boolean startHandler=true;
+    public boolean endHandler=false;
+}
 
-    @Override
+/*    @Override
     public void create () {
         batch = new SpriteBatch();
         nBackTracker = new NBackTracker();
@@ -99,4 +124,4 @@ public class MainGame extends ApplicationAdapter {
         batch.dispose();
         stage.dispose();
     }
-}
+}*/
