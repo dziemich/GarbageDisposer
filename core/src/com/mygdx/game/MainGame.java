@@ -36,6 +36,7 @@ public class MainGame extends Game {
         rnd = new Random();
         belt.firstTimeBelt(rnd);
         scoreKeeper = new ScoreKeeper();
+        nBackTracker = new NBackTracker();
         this.setScreen(new MainMenuScreen(this));
 
 

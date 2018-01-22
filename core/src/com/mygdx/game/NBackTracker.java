@@ -11,8 +11,8 @@ public class NBackTracker {
         playerHits++;
     }
 
-    public void checkForNBack(Garbage.garbageTypes current, Garbage.garbageTypes nback2){
-        if(current.equals(nback2)) occurence++;
+    public void incrementOccurence(){
+         occurence++;
     }
 
     public int getPlayerHits() {

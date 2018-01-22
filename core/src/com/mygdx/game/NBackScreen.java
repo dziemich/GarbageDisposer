@@ -92,10 +92,15 @@ public class NBackScreen implements Screen {
         Assets.displayNBackGame(game.batch);
 
 
-        if (firstTime){
+        if (firstTime) {
             board.randomAndAdd();
             firstTime = false;
             System.out.println("aa");
+        }
+        if (board.size() > 2) {
+            if (board.checkPosition(0).equals(board.checkPosition(level)) || (board.checkPosition(0).equals(board.checkPosition(level)) || (board.checkPosition(0).equals(board.checkPosition(level))))) {
+                MainGame.nBackTracker.incrementOccurence();
+            }
         }
         timer += Gdx.graphics.getRawDeltaTime();
         if (timer > delay) {

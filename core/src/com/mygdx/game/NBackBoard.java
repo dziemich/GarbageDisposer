@@ -110,9 +110,9 @@ public class NBackBoard {
     }
 
     public void checkNBackPosition(int level){
-        if(checkPosition(0) == checkPosition(level)){
+        if(checkPosition(0).equals(checkPosition(level))){
             removeFirst();
-            //xD najlepszy if w miescie
+            MainGame.nBackTracker.incrementPlayerHits();
         }else{
             removeFirst();
         }
@@ -121,14 +121,16 @@ public class NBackBoard {
     public void checkNBackType(int level){
         if(checkType(0).equals(checkType(level))){
             removeFirst();
+            MainGame.nBackTracker.incrementPlayerHits();
         }else{
             removeFirst();
         }
     }
 
     public void checkNBackTypeAndPosition(int level){
-        if((checkPosition(0) == checkPosition(level)) && (checkType(0).equals(checkType(level)))){
+        if((checkPosition(0).equals(checkPosition(level))) && (checkType(0).equals(checkType(level)))){
             removeFirst();
+            MainGame.nBackTracker.incrementPlayerHits();
         }else{
             removeFirst();
         }
