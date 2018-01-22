@@ -6,8 +6,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import java.util.LinkedList;
@@ -19,14 +21,17 @@ public class NBackScreen implements Screen {
     private final ImageButton typeButton;
     private final ImageButton positionAndTypeButton;
     private final LinkedList<ImageButton> posList;
+    NBackBoard board;
     Stage stage;
     final MainGame game;
     OrthographicCamera camera;
+    int level = 2;
     Belt belt;
     Random rndGen;
 
     public NBackScreen(MainGame game) {
         this.game = game;
+        board = new NBackBoard();
         stage = new Stage();
         Assets.load();
 
@@ -53,6 +58,21 @@ public class NBackScreen implements Screen {
         }
 
 
+        positionButton.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                board.checkNBackPosition(level);
+            }
+        });
+        typeButton.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                board.checkNBackType(level);
+            }
+        });
+        positionAndTypeButton.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                board.checkNBackTypeAndPosition(level);
+            }
+        });
     }
 
     @Override
