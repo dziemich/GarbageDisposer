@@ -39,7 +39,7 @@ public class Assets {
             batch.draw(plasticBin, 290, 0);
             batch.draw(paperBin, 540, 0);
 
-            batch.draw(allGarbages, 40,100);
+            //batch.draw(allGarbages, 40,100);
 
 
 
