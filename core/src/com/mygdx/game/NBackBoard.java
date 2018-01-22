@@ -55,15 +55,28 @@ public class NBackBoard {
         return type;
     }
 
-    public int checkNBack()
-
-    public void printEvent(Garbage type, int position){
-
-
+    public void checkNBackPosition(int level){
+        if(checkPosition(0) == checkPosition(level)){
+            removeLast();
+        }else{
+            removeLast();
+        }
     }
 
-    public void displayBoard(Random generator, SpriteBatch batch){
+    public void checkNBackType(int level){
+        if(checkType(0).equals(checkType(level))){
+            removeLast();
+        }else{
+            removeLast();
+        }
+    }
 
+    public void checkNBackTypeAndPosition(int level){
+        if((checkPosition(0) == checkPosition(level)) && (checkType(0).equals(checkType(level)))){
+            removeLast();
+        }else{
+            removeLast();
+        }
     }
 
     public void removeLast(){
