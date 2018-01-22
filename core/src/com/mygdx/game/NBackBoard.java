@@ -45,40 +45,40 @@ public class NBackBoard {
         addNewEvent(type, position);
         switch (position){
             case 1:
-                x= 100;
+                x= 120;
                 y= 100;
                 break;
             case 2:
-                x= 300;
+                x= 260;
                 y= 100;
                 break;
             case 3:
-                x= 500;
+                x= 400;
                 y= 100;
                 break;
             case 4:
-                x= 100;
-                y= 300;
+                x= 120;
+                y= 240;
                 break;
             case 5:
-                x= 300;
-                y= 300;
+                x= 260;
+                y= 240;
                 break;
             case 6:
-                x= 500;
-                y= 300;
+                x= 400;
+                y= 240;
                 break;
             case 7:
-                x= 100;
-                y= 500;
+                x= 120;
+                y= 380;
                 break;
             case 8:
-                x= 300;
-                y= 500;
+                x= 260;
+                y= 380;
                 break;
             case 9:
-                x= 500;
-                y= 500;
+                x= 400;
+                y= 380;
                 break;
 
         }
