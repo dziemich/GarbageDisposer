@@ -47,10 +47,13 @@ public class NBackBoard {
         switch(number){
             case 1:
                 type = Garbage.garbageTypes.PAPER;
+                break;
             case 2:
                 type = Garbage.garbageTypes.GLASS;
+                break;
             case 3:
                 type = Garbage.garbageTypes.PLASTIC;
+                break;
         }
         return type;
     }
