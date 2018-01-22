@@ -22,17 +22,26 @@ public class NBackBoard {
     }
 
     public void addNewEvent(Garbage type, int position){
-        boardNBackPosition.add(position);
-        boardNBackType.add(type);
+        boardNBackPosition.add(0,position);
+        boardNBackType.add(0,type);
     }
 
-    public void randomAndAdd(SpriteBatch b){
+    public void randomAndAdd(){
         Garbage type = null;
         int position;
         float x=0;
         float y=0;
         type = randomGarbage();
         position = randomPosition();
+        addNewEvent(type, position);
+    }
+
+    public void print(SpriteBatch batch){
+        Garbage type = checkType(0);
+        int position = checkPosition(0);
+        float x=0;
+        float y=0;
+
         addNewEvent(type, position);
         switch (position){
             case 1:
@@ -73,7 +82,7 @@ public class NBackBoard {
                 break;
 
         }
-        b.draw(type.getGarbageImage(), x, y);
+        batch.draw(type.getGarbageImage(), x, y);
     }
 
     public Integer randomPosition(){

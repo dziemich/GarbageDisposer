@@ -30,6 +30,7 @@ public class NBackScreen implements Screen {
     Random rndGen;
     private float timer;
     private float delay=3;
+    private boolean firstTime = true;
 
     public NBackScreen(MainGame game) {
         this.game = game;
@@ -90,11 +91,19 @@ public class NBackScreen implements Screen {
         game.batch.begin();
         Assets.displayNBackGame(game.batch);
 
+
+        if (firstTime){
+            board.randomAndAdd();
+            firstTime = false;
+            System.out.println("aa");
+        }
         timer += Gdx.graphics.getRawDeltaTime();
         if (timer > delay) {
-            board.randomAndAdd(game.batch);
+            board.randomAndAdd();
             timer = 0;
+            System.out.println("xd");
         }
+        board.print(game.batch);
         game.batch.draw(costam, 1200, 1200);
         stage.draw();
         game.batch.end();
