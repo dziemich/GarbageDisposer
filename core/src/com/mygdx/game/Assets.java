@@ -22,10 +22,10 @@ public class Assets {
         beltImage = new TextureRegion(new Texture("core/assets/Belt.png"));
         bitMapDisplay = new BitmapFont();
 
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("core/assets/font/LLPIXEL3.ttf"));
+        /*generator = new FreeTypeFontGenerator(Gdx.files.internal("core/assets/font/LLPIXEL3.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 36;
-        bitMapDisplay = generator.generateFont(parameter);
+        bitMapDisplay = generator.generateFont(parameter);*/
 
     }
 
