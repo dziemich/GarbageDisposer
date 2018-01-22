@@ -38,8 +38,7 @@ public class NBackScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.batch.begin();
-        Assets.displayMainGame(game.batch);
-        belt.displayBelt(rndGen, game.batch);
+        Assets.displayNBackGame(game.batch);
         stage.draw();
         game.batch.end();
     }
