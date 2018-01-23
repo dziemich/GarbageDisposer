@@ -1,12 +1,15 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.LinkedList;
 import java.util.Random;
 
 public class Belt {
     private LinkedList<Garbage> garbageList;
+    private final TextureRegion costam = new TextureRegion(new Texture("core/assets/pola/pole_both.png"));
 
     public Belt() {
         garbageList = new LinkedList<Garbage>();
@@ -39,13 +42,14 @@ public class Belt {
             offset+=113;
         }
         addToBelt(generator);
+        batch.draw(costam, 1200,1200);
     }
     public int size(){
         return garbageList.size();
     }
 
     public void addToBelt(Random generator){
-        if(garbageList.size() <6) {
+        if(garbageList.size() < 5) {
             int switcher = generator.nextInt(3);
             switch (switcher) {
                 case 0:
@@ -60,7 +64,7 @@ public class Belt {
         }
     }
     public void firstTimeBelt(Random generator){
-        for(int i=0; i<6; ++i){
+        for(int i=0; i<5; ++i){
             addToBelt(generator);
         }
     }
