@@ -28,7 +28,6 @@ public class NBackScreen implements Screen {
     OrthographicCamera camera;
     int level = 2;
     Random rndGen;
-    int lives = 3;
     private float timer;
     private float delay=1.6f;
     private boolean firstTime = true;
@@ -64,24 +63,17 @@ public class NBackScreen implements Screen {
 
         positionButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                if(!board.checkNBackPosition(level)){
-                    lives--;
-                }
-                System.out.println("jest klik 1");
+                board.checkNBackPosition(level);
             }
         });
         typeButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                if(!board.checkNBackType(level)){
-                    lives--;
-                }
+                board.checkNBackType(level);
             }
         });
         positionAndTypeButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                if(!board.checkNBackTypeAndPosition(level)){
-                    lives--;
-                }
+                board.checkNBackTypeAndPosition(level);
             }
         });
     }
@@ -132,7 +124,6 @@ public class NBackScreen implements Screen {
         }
 
         board.print(game.batch);
-        game.live.nBackDisplayLives(lives, game.batch);
         //System.out.println("zycie: "+lives);
         game.batch.draw(costam, 1200, 1200);
         stage.draw();
