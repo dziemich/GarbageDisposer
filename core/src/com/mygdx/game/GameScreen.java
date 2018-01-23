@@ -39,8 +39,6 @@ public class GameScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
 
-
-
         System.out.println("game screen");
 
         glassBinButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/GlassGarbage.png"))));

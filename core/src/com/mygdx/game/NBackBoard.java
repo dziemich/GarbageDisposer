@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.*;
 
 public class NBackBoard {
-    private LinkedList<Garbage> boardNBackType;
-    private LinkedList<Integer> boardNBackPosition;
+    public LinkedList<Garbage> boardNBackType;
+    public LinkedList<Integer> boardNBackPosition;
 
     public NBackBoard(){
         boardNBackType = new LinkedList<Garbage>();
@@ -26,6 +26,15 @@ public class NBackBoard {
         boardNBackType.add(0,type);
     }
 
+    void clear(){
+        for(int i = boardNBackPosition.size(); i>0; i--){
+            if(i>3){
+                boardNBackType.removeLast();
+                boardNBackPosition.removeLast();
+            }
+        }
+    }
+
     public void randomAndAdd(){
         Garbage type = null;
         int position;
@@ -41,8 +50,6 @@ public class NBackBoard {
         int position = checkPosition(0);
         float x=0;
         float y=0;
-
-        addNewEvent(type, position);
         switch (position){
             case 1:
                 x= 120;
@@ -85,13 +92,13 @@ public class NBackBoard {
         batch.draw(type.getGarbageImage(), x, y);
     }
 
-    public Integer randomPosition(){
+    public static Integer randomPosition(){
         Random generator = new Random();
         int position = generator.nextInt((9 - 1) + 1) + 1; // XDDDDDD
         return position;
     }
 
-    public Garbage randomGarbage(){
+    public static Garbage randomGarbage(){
         Garbage type = null;
         Random generator = new Random();
         int number = generator.nextInt((3 - 1) + 1) + 1;

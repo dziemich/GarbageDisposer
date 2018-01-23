@@ -29,7 +29,7 @@ public class NBackScreen implements Screen {
     int level = 2;
     Random rndGen;
     private float timer;
-    private float delay=0.5f;
+    private float delay=1.6f;
     private boolean firstTime = true;
 
     public NBackScreen(MainGame game) {
@@ -37,7 +37,6 @@ public class NBackScreen implements Screen {
         board = new NBackBoard();
         stage = new Stage();
         Assets.load();
-
 
         positionButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/pola/pole_pos.png"))));
         typeButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/pola/pole_typ.png"))));
@@ -65,16 +64,19 @@ public class NBackScreen implements Screen {
         positionButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 board.checkNBackPosition(level);
+
             }
         });
         typeButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 board.checkNBackType(level);
+
             }
         });
         positionAndTypeButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 board.checkNBackTypeAndPosition(level);
+
             }
         });
     }
@@ -93,21 +95,39 @@ public class NBackScreen implements Screen {
 
 
         if (firstTime) {
-            board.randomAndAdd();
+            board.addNewEvent(NBackBoard.randomGarbage(), NBackBoard.randomPosition());
             firstTime = false;
             System.out.println("aa");
         }
-        if (board.size() > 2) {
+
+       /* if (board.size() > 2) {
             if (board.checkPosition(0).equals(board.checkPosition(level)) || (board.checkPosition(0).equals(board.checkPosition(level)) || (board.checkPosition(0).equals(board.checkPosition(level))))) {
                 MainGame.nBackTracker.incrementOccurence();
+                System.out.println(MainGame.nBackTracker.getOccurence());
             }
-        }
+        }*/
+
         timer += Gdx.graphics.getRawDeltaTime();
         if (timer > delay) {
-            board.randomAndAdd();
+
+            if (board.boardNBackPosition.size() > 2 && board.boardNBackType.size() > 2) {
+                Garbage checkedType = board.boardNBackType.get(0);
+                Garbage peekedType = board.boardNBackType.get(2);
+                Integer checkedPos = board.boardNBackPosition.get(0);
+                Integer peekedPos = board.boardNBackPosition.get(2);
+
+                if (checkedType.returnType().equals(peekedType.returnType()) || (checkedPos.equals(peekedPos))) {
+                    MainGame.nBackTracker.incrementOccurence();
+                    System.out.println(MainGame.nBackTracker.getOccurence());
+                }
+
+
+            }
+            board.addNewEvent(NBackBoard.randomGarbage(), NBackBoard.randomPosition());
             timer = 0;
-            System.out.println("xd");
+            board.clear();
         }
+
         board.print(game.batch);
         game.batch.draw(costam, 1200, 1200);
         stage.draw();
