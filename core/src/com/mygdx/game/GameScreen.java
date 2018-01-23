@@ -28,6 +28,7 @@ public class GameScreen implements Screen {
     final MainGame game;
     OrthographicCamera camera;
     Random rndGen;
+    int lives = 3;
 
     public GameScreen(final MainGame game) {
         this.game = game;
@@ -65,6 +66,8 @@ public class GameScreen implements Screen {
                 if(checker.returnType().equals(Garbage.garbageTypes.GLASS)){
                     MainGame.scoreKeeper.add(100);
                     System.out.println("szklo smiga");
+                }else{
+                    lives--;
                 }
             }
         });
@@ -75,6 +78,8 @@ public class GameScreen implements Screen {
                 if(checker.returnType().equals(Garbage.garbageTypes.PLASTIC)){
                     MainGame.scoreKeeper.add(100);
                     System.out.println("plastik smiga");
+                }else{
+                    lives--;
                 }
             }
         });
@@ -85,6 +90,8 @@ public class GameScreen implements Screen {
                 if(checker.returnType().equals(Garbage.garbageTypes.PAPER)){
                     MainGame.scoreKeeper.add(100);
                     System.out.println("papier smiga");
+                }else{
+                    lives--;
                 }
             }
         });
@@ -104,6 +111,7 @@ public class GameScreen implements Screen {
         game.batch.begin();
         Assets.displayMainGame(game.batch);
         game.belt.displayBelt(game.rnd, game.batch);
+        game.live.garbageDisplayLives(lives, game.batch);
         //System.out.println("b");
         stage.draw();
         game.batch.end();

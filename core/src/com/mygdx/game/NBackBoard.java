@@ -116,30 +116,36 @@ public class NBackBoard {
         return type;
     }
 
-    public void checkNBackPosition(int level){
+    public boolean checkNBackPosition(int level){
         if(checkPosition(0).equals(checkPosition(level))){
             removeFirst();
             MainGame.nBackTracker.incrementPlayerHits();
+            return true;
         }else{
             removeFirst();
+            return false;
         }
     }
 
-    public void checkNBackType(int level){
+    public boolean checkNBackType(int level){
         if(checkType(0).equals(checkType(level))){
             removeFirst();
             MainGame.nBackTracker.incrementPlayerHits();
+            return true;
         }else{
             removeFirst();
+            return false;
         }
     }
 
-    public void checkNBackTypeAndPosition(int level){
+    public boolean checkNBackTypeAndPosition(int level){
         if((checkPosition(0).equals(checkPosition(level))) && (checkType(0).equals(checkType(level)))){
             removeFirst();
             MainGame.nBackTracker.incrementPlayerHits();
+            return true;
         }else{
             removeFirst();
+            return false;
         }
     }
 

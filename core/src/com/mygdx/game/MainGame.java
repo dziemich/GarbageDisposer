@@ -19,6 +19,7 @@ public class MainGame extends Game {
     public BitmapFont font;
     public Belt belt;
     public Random rnd;
+    public Live live;
 
 
 
@@ -33,14 +34,12 @@ public class MainGame extends Game {
     public void create() {
         batch = new SpriteBatch();
         belt = new Belt();
+        live = new Live();
         rnd = new Random();
         belt.firstTimeBelt(rnd);
         scoreKeeper = new ScoreKeeper();
         nBackTracker = new NBackTracker();
         this.setScreen(new MainMenuScreen(this));
-
-
-
     }
 
     public void render() {

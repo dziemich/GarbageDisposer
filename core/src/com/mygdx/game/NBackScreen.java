@@ -28,6 +28,7 @@ public class NBackScreen implements Screen {
     OrthographicCamera camera;
     int level = 2;
     Random rndGen;
+    int lives = 3;
     private float timer;
     private float delay=1.6f;
     private boolean firstTime = true;
@@ -63,20 +64,24 @@ public class NBackScreen implements Screen {
 
         positionButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                board.checkNBackPosition(level);
-
+                if(!board.checkNBackPosition(level)){
+                    lives--;
+                }
+                System.out.println("jest klik 1");
             }
         });
         typeButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                board.checkNBackType(level);
-
+                if(!board.checkNBackType(level)){
+                    lives--;
+                }
             }
         });
         positionAndTypeButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                board.checkNBackTypeAndPosition(level);
-
+                if(!board.checkNBackTypeAndPosition(level)){
+                    lives--;
+                }
             }
         });
     }
@@ -92,8 +97,6 @@ public class NBackScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.batch.begin();
         Assets.displayNBackGame(game.batch);
-
-
         if (firstTime) {
             board.addNewEvent(NBackBoard.randomGarbage(), NBackBoard.randomPosition());
             firstTime = false;
@@ -129,6 +132,8 @@ public class NBackScreen implements Screen {
         }
 
         board.print(game.batch);
+        game.live.nBackDisplayLives(lives, game.batch);
+        //System.out.println("zycie: "+lives);
         game.batch.draw(costam, 1200, 1200);
         stage.draw();
         game.batch.end();
