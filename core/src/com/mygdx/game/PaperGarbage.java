@@ -19,4 +19,5 @@ public class PaperGarbage extends Garbage {
     public garbageTypes returnType() {
         return type;
     }
+
 }
