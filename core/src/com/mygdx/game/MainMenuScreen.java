@@ -89,18 +89,14 @@ public class MainMenuScreen implements Screen {
         stage.addActor(startGarbageButton);
         if(MainGame.moveToGameScreen){
             game.setScreen(new GameScreen(game));
-            System.out.println("test");
             dispose();
-            System.out.println("main dziala");
         }
         stage.draw();
 
         stage.addActor(startNBackButton);
         if(MainGame.moveToNBackGame){
             game.setScreen(new NBackScreen(game));
-            System.out.println("test");
             dispose();
-            System.out.println("nback dziala");
         }
         stage.draw();
         game.batch.end();

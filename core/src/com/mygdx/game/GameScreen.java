@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -23,12 +24,12 @@ public class GameScreen implements Screen {
     private final ImageButton plasticBinButton;
     private final ImageButton paperBinButton;
     private final LinkedList<ImageButton> garbageButtonsList;
+    private final Sound clickSound;
 
     Stage stage;
     final MainGame game;
     OrthographicCamera camera;
     Random rndGen;
-    int lives = 3;
 
     public GameScreen(final MainGame game) {
         this.game = game;
@@ -40,11 +41,11 @@ public class GameScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
 
-        System.out.println("game screen");
-
         glassBinButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/GlassGarbage.png"))));
         plasticBinButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/PlasticGarbage.png"))));
         paperBinButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/PaperGarbage.png"))));
+
+        clickSound = Gdx.audio.newSound(Gdx.files.internal("core/assets/ogg/403009_inspectorj_ui-confirmation-alert-b3.ogg"));
 
         glassBinButton.setPosition(40,0);
         plasticBinButton.setPosition(290,0);
@@ -62,37 +63,34 @@ public class GameScreen implements Screen {
        glassBinButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 Garbage checker = game.belt.returnPopped();
-                //System.out.println(checker.returnType());
                 if(checker.returnType().equals(Garbage.garbageTypes.GLASS)){
                     MainGame.scoreKeeper.add(100);
-                    System.out.println("szklo smiga");
                 }else{
-                    lives--;
+                    MainGame.lives--;
                 }
+                clickSound.play();
             }
         });
         plasticBinButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 Garbage checker = game.belt.returnPopped();
-                //System.out.println(checker.returnType());
                 if(checker.returnType().equals(Garbage.garbageTypes.PLASTIC)){
                     MainGame.scoreKeeper.add(100);
-                    System.out.println("plastik smiga");
                 }else{
-                    lives--;
+                    MainGame.lives--;
                 }
+                clickSound.play();
             }
         });
         paperBinButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 Garbage checker = game.belt.returnPopped();
-                //System.out.println(checker.returnType());
                 if(checker.returnType().equals(Garbage.garbageTypes.PAPER)){
                     MainGame.scoreKeeper.add(100);
-                    System.out.println("papier smiga");
                 }else{
-                    lives--;
+                    MainGame.lives--;
                 }
+                clickSound.play();
             }
         });
 
@@ -111,10 +109,12 @@ public class GameScreen implements Screen {
         game.batch.begin();
         Assets.displayMainGame(game.batch);
         game.belt.displayBelt(game.rnd, game.batch);
-        game.live.garbageDisplayLives(lives, game.batch);
-        //System.out.println("b");
+        game.live.garbageDisplayLives(MainGame.lives, game.batch);
         stage.draw();
         game.batch.end();
+        if (MainGame.lives==0){
+            game.setScreen(new EndScreen(game, false));
+        }
     }
 
     @Override

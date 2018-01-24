@@ -3,7 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Live {
+public class Life {
 
     public void garbageDisplayLives(int lives, SpriteBatch batch){
         int offset = 0;

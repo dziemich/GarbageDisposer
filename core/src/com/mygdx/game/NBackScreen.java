@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -21,7 +22,8 @@ public class NBackScreen implements Screen {
     private final ImageButton typeButton;
     private final ImageButton positionAndTypeButton;
     private final LinkedList<ImageButton> posList;
-    private final TextureRegion costam;
+    private final TextureRegion flusher;
+    private final Sound clickSound;
     NBackBoard board;
     Stage stage;
     final MainGame game;
@@ -32,17 +34,22 @@ public class NBackScreen implements Screen {
     private float delay=1.6f;
     private boolean firstTime = true;
 
+
+
     public NBackScreen(MainGame game) {
         this.game = game;
         board = new NBackBoard();
         stage = new Stage();
         Assets.load();
+        Gdx.input.setInputProcessor(stage);
 
         positionButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/pola/pole_pos.png"))));
         typeButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/pola/pole_typ.png"))));
         positionAndTypeButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/pola/pole_both.png"))));
 
-        costam = new TextureRegion(new Texture("core/assets/pola/pole_both.png"));
+        flusher = new TextureRegion(new Texture("core/assets/pola/pole_both.png"));
+
+        clickSound = Gdx.audio.newSound(Gdx.files.internal("core/assets/ogg/403009_inspectorj_ui-confirmation-alert-b3.ogg"));
 
         positionButton.setPosition(550,350);
         typeButton.setPosition(550,200);
@@ -63,17 +70,52 @@ public class NBackScreen implements Screen {
 
         positionButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                board.checkNBackPosition(level);
+                if (board.size() > 2) {
+                    Integer checkedPos = board.boardNBackPosition.get(0);
+                    Integer peekedPos = board.boardNBackPosition.get(2);
+
+                    if (checkedPos.equals(peekedPos)) {
+                        if(!MainGame.keyBlocker) {
+                            MainGame.nBackTracker.incrementPlayerHits();
+                            MainGame.keyBlocker = true;
+                        }
+                    }
+                }
+                clickSound.play();
             }
         });
         typeButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                board.checkNBackType(level);
+                if (board.size() > 2) {
+                    Garbage checkedType = board.boardNBackType.get(0);
+                    Garbage peekedType = board.boardNBackType.get(2);
+
+                    if (checkedType.returnType().equals(peekedType.returnType())) {
+                        if(!MainGame.keyBlocker) {
+                            MainGame.nBackTracker.incrementPlayerHits();
+                            MainGame.keyBlocker = true;
+                        }
+                    }
+                }
+                clickSound.play();
             }
         });
         positionAndTypeButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                board.checkNBackTypeAndPosition(level);
+                if (board.size() > 2) {
+                    Garbage checkedType = board.boardNBackType.get(0);
+                    Garbage peekedType = board.boardNBackType.get(2);
+                    Integer checkedPos = board.boardNBackPosition.get(0);
+                    Integer peekedPos = board.boardNBackPosition.get(2);
+
+                    if (checkedType.returnType().equals(peekedType.returnType()) && (checkedPos.equals(peekedPos))) {
+                        if(!MainGame.keyBlocker) {
+                            MainGame.nBackTracker.incrementPlayerHits();
+                            MainGame.keyBlocker = true;
+                        }
+                    }
+                }
+                clickSound.play();
             }
         });
     }
@@ -92,19 +134,11 @@ public class NBackScreen implements Screen {
         if (firstTime) {
             board.addNewEvent(NBackBoard.randomGarbage(), NBackBoard.randomPosition());
             firstTime = false;
-            System.out.println("aa");
         }
 
-       /* if (board.size() > 2) {
-            if (board.checkPosition(0).equals(board.checkPosition(level)) || (board.checkPosition(0).equals(board.checkPosition(level)) || (board.checkPosition(0).equals(board.checkPosition(level))))) {
-                MainGame.nBackTracker.incrementOccurence();
-                System.out.println(MainGame.nBackTracker.getOccurence());
-            }
-        }*/
-
         timer += Gdx.graphics.getRawDeltaTime();
+        MainGame.gameTimer += Gdx.graphics.getRawDeltaTime();
         if (timer > delay) {
-
             if (board.boardNBackPosition.size() > 2 && board.boardNBackType.size() > 2) {
                 Garbage checkedType = board.boardNBackType.get(0);
                 Garbage peekedType = board.boardNBackType.get(2);
@@ -113,10 +147,8 @@ public class NBackScreen implements Screen {
 
                 if (checkedType.returnType().equals(peekedType.returnType()) || (checkedPos.equals(peekedPos))) {
                     MainGame.nBackTracker.incrementOccurence();
-                    System.out.println(MainGame.nBackTracker.getOccurence());
                 }
-
-
+                MainGame.keyBlocker = false;
             }
             board.addNewEvent(NBackBoard.randomGarbage(), NBackBoard.randomPosition());
             timer = 0;
@@ -124,10 +156,12 @@ public class NBackScreen implements Screen {
         }
 
         board.print(game.batch);
-        //System.out.println("zycie: "+lives);
-        game.batch.draw(costam, 1200, 1200);
+        game.batch.draw(flusher, 1200, 1200);
         stage.draw();
         game.batch.end();
+        if (MainGame.gameTimer>30){
+            game.setScreen(new EndScreen(game, true));
+        }
     }
 
     @Override

@@ -22,4 +22,9 @@ public class NBackTracker {
     public int getOccurence() {
         return occurence;
     }
+
+    public void reset(){
+        occurence= 0;
+        playerHits=0;
+    }
 }

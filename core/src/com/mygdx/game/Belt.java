@@ -23,14 +23,6 @@ public class Belt {
         return garbageList.pop();
     }
 
-    /*public Garbage.garbageTypes popAndCheck(int pos){
-        Garbage popped = garbageList.remove(pos);
-        return popped.returnType();
-    }*/
-
-   /* public Garbage.soundTypes checkSound(int pos){
-        return garbageList.get(pos).returnSound();
-    }*/
 
     public Garbage.garbageTypes checkType(int pos){
         return garbageList.get(pos).returnType();
