@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 public class PaperGarbage extends Garbage {
     private Texture garbageImage;
     private garbageTypes type;
-    private soundTypes sound;
 
     public PaperGarbage() {
         garbageImage = new Texture("core/assets/PaperNewspaper.png");
@@ -21,8 +20,4 @@ public class PaperGarbage extends Garbage {
         return type;
     }
 
-    @Override
-    public soundTypes returnSound(){
-        return sound;
-    }
 }

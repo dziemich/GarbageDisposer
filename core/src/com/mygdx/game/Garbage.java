@@ -8,10 +8,6 @@ public abstract class Garbage {
         GLASS, PLASTIC, PAPER
     }
 
-    enum soundTypes {
-        //tu dodać dzwieki
-    }
     public abstract garbageTypes returnType();
-    public abstract soundTypes returnSound();
     public abstract Texture getGarbageImage();
 }
